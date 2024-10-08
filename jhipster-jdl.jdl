@@ -1,0 +1,72 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType jwt
+    baseName servidorApi
+    buildTool maven
+    cacheProvider ehcache
+    clientFramework react
+    clientTheme none
+    databaseType sql
+    devDatabaseType h2Disk
+    enableHibernateCache true
+    enableTranslation true
+    packageName ar.edu.um.programacion2
+    prodDatabaseType mysql
+  }
+  entities *
+}
+
+entity Dispositivo {
+  codigo String required,
+  nombre String required,
+  descripcion String required,
+  precioBase BigDecimal required min(0),
+  moneda Moneda required
+}
+
+entity Caracteristica {
+  nombre String required,
+  descripcion String required
+}
+
+entity Personalizacion {
+  nombre String required,
+  descripcion String required
+}
+
+entity Opcion {
+  codigo String required,
+  nombre String required,
+  descripcion String required,
+  precioAdicional BigDecimal required min(0)
+}
+
+entity Adicional {
+  nombre String required,
+  descripcion String required,
+  precio BigDecimal required min(0),
+  precioGratis BigDecimal required min(-1)
+}
+
+
+enum Moneda{
+	ARS,
+  USD,
+  EUR
+}
+
+
+relationship ManyToOne {
+  Caracteristica{dispositivo required} to Dispositivo,
+  Opcion{personalizacion required} to Personalizacion,
+  Personalizacion{dispositivo required} to Dispositivo,
+  Adicional{dispositivo required} to Dispositivo
+}
+
+
+paginate Dispositivo, Caracteristica, Personalizacion, Opcion,Adicional with infinite-scroll
+service Dispositivo, Caracteristica, Personalizacion, Opcion, Adicional with serviceClass
+dto Dispositivo, Caracteristica, Personalizacion, Opcion, Adicional with mapstruct
+
+
