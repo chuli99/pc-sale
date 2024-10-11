@@ -4,6 +4,9 @@ import ar.edu.um.programacion2.domain.Dispositivo;
 import ar.edu.um.programacion2.repository.DispositivoRepository;
 import ar.edu.um.programacion2.service.dto.DispositivoDTO;
 import ar.edu.um.programacion2.service.mapper.DispositivoMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Service Implementation for managing {@link Dispositivo}.
