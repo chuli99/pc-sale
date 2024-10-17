@@ -95,6 +95,7 @@
     "reactstrap": "9.1.4",
     "redux": "4.2.0",
     "redux-thunk": "2.4.1",
+    "servidor-api": "file:",
     "tslib": "2.4.0",
     "uuid": "8.3.2"
   },

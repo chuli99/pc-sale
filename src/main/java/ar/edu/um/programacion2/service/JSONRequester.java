@@ -1,16 +1,11 @@
-package ar.edu.um.programacion2.service.mapper;
+package ar.edu.um.programacion2.service;
 
-import ar.edu.um.programacion2.config.Constants;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONString;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
