@@ -36,16 +36,4 @@ public class JSONRequester {
             throw new RuntimeException(e);
         }
     }
-
-    public static void main(String[] args) {
-        JSONRequester requester = new JSONRequester();
-
-        String baseUrl = "http://192.168.194.254:8080";
-        String endpointSuffix = "/api/dispositivos";
-        String authToken =
-            "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqdWxpYW5jYXN0aWxsbyIsImV4cCI6MTczNjUyMzE5MiwiYXV0aCI6IlJPTEVfVVNFUiIsImlhdCI6MTcyNzg4MzE5Mn0.FbIpN_C-wofDOe7mYMpFGySrNFgmqo4mMFFB8nrcmfBsuzKxT4mzLsmyQkjQmSWF4bN4n0HOuOpYAeBv7QMHaw";
-
-        String resultado = requester.getJSONFromEndpoint(baseUrl, endpointSuffix, authToken);
-        System.out.println(resultado);
-    }
 }
