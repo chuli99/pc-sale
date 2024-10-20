@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dispositivos">
+      <h2 data-cy="dispositivosDetailsHeading"><span jhiTranslate="tiendaApp.dispositivos.detail.title">Dispositivos</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ dispositivos.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="tiendaApp.dispositivos.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ dispositivos.codigo }}</span>
+        </dd>
+        <dt><span jhiTranslate="tiendaApp.dispositivos.nombre">Nombre</span></dt>
+        <dd>
+          <span>{{ dispositivos.nombre }}</span>
+        </dd>
+        <dt><span jhiTranslate="tiendaApp.dispositivos.descripcion">Descripcion</span></dt>
+        <dd>
+          <span>{{ dispositivos.descripcion }}</span>
+        </dd>
+        <dt><span jhiTranslate="tiendaApp.dispositivos.precioBase">Precio Base</span></dt>
+        <dd>
+          <span>{{ dispositivos.precioBase }}</span>
+        </dd>
+        <dt><span jhiTranslate="tiendaApp.dispositivos.moneda">Moneda</span></dt>
+        <dd>
+          <span>{{ dispositivos.moneda }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/dispositivos', dispositivos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

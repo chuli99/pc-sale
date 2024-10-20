@@ -48,11 +48,16 @@ public class CacheConfiguration {
             createCache(cm, ar.edu.um.programacion2.domain.User.class.getName());
             createCache(cm, ar.edu.um.programacion2.domain.Authority.class.getName());
             createCache(cm, ar.edu.um.programacion2.domain.User.class.getName() + ".authorities");
-            createCache(cm, ar.edu.um.programacion2.domain.Dispositivo.class.getName());
-            createCache(cm, ar.edu.um.programacion2.domain.Caracteristica.class.getName());
-            createCache(cm, ar.edu.um.programacion2.domain.Personalizacion.class.getName());
-            createCache(cm, ar.edu.um.programacion2.domain.Opcion.class.getName());
-            createCache(cm, ar.edu.um.programacion2.domain.Adicional.class.getName());
+            createCache(cm, ar.edu.um.programacion2.domain.Dispositivos.class.getName());
+            createCache(cm, ar.edu.um.programacion2.domain.Dispositivos.class.getName() + ".caracteristicas");
+            createCache(cm, ar.edu.um.programacion2.domain.Dispositivos.class.getName() + ".adicionales");
+            createCache(cm, ar.edu.um.programacion2.domain.Dispositivos.class.getName() + ".personalizaciones");
+            createCache(cm, ar.edu.um.programacion2.domain.Caracteristicas.class.getName());
+            createCache(cm, ar.edu.um.programacion2.domain.Personalizaciones.class.getName());
+            createCache(cm, ar.edu.um.programacion2.domain.Personalizaciones.class.getName() + ".opciones");
+            createCache(cm, ar.edu.um.programacion2.domain.Opciones.class.getName());
+            createCache(cm, ar.edu.um.programacion2.domain.Adicionales.class.getName());
+            createCache(cm, ar.edu.um.programacion2.domain.Ventas.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

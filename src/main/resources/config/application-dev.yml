@@ -32,8 +32,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/servidorapi;DB_CLOSE_DELAY=-1;MODE=LEGACY
-    username: servidorApi
+    url: jdbc:h2:file:./target/h2db/db/tienda;DB_CLOSE_DELAY=-1;MODE=LEGACY
+    username: tienda
     password:
     hikari:
       poolName: Hikari
@@ -73,7 +73,7 @@ jhipster:
   # CORS is only enabled by default with the "dev" profile
   cors:
     # Allow Ionic for JHipster by default (* no longer allowed in Spring Boot 2.4+)
-    allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:9060,https://localhost:9060'
+    allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:4200,https://localhost:4200'
     # Enable CORS when running in GitHub Codespaces
     allowed-origin-patterns: 'https://*.githubpreview.dev'
     allowed-methods: '*'
@@ -85,7 +85,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NTYwNWExMTIyMDRjY2I2OWI1MGQ1MDZkZWUzMDFlYjg5ZDlkOTE2YzNiMGIyZGRmY2M4NmY4Nzc1YzU2OTk0N2M3NTkwNzViYmFiNGIxZWNmZDg4OTkwNTg2YWQ3OGIwZDUxNTQ2NTk2NDU1MDJjZDAwOWEyNjlhZWJiZjNiNTU=
+        base64-secret: Yzg1OWI0Yzc5OGU0YjU0NmM0ODg1YmRjMzdkM2FlMWI2MWFhNjBmNjkzMDExYTRiMjkyODNmNDJmYjkyOGM3ZDdjNzk2MzIyNjI3MjNlZDhmYmYxNTI2YTAyNmMyZGVlNGRmNjA4MzRjZGQzZTZmNzljMGE0ZjBkMWYyZWI0ZTA=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

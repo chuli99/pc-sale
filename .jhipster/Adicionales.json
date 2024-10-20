@@ -1,0 +1,44 @@
+{
+  "applications": ["tienda"],
+  "changelogDate": "20241017205311",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "adicionales",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "precio",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "precioGratis",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Adicionales",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "dispositivos",
+      "otherEntityRelationshipName": "adicionales",
+      "relationshipName": "dispositivos",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

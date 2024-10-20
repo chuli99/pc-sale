@@ -1,0 +1,28 @@
+{
+  "tiendaApp": {
+    "adicionales": {
+      "home": {
+        "title": "Adicionales",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Adicionales",
+        "createOrEditLabel": "Create or edit a Adicionales",
+        "notFound": "No Adicionales found"
+      },
+      "created": "A new Adicionales is created with identifier {{ param }}",
+      "updated": "A Adicionales is updated with identifier {{ param }}",
+      "deleted": "A Adicionales is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Adicionales {{ id }}?"
+      },
+      "detail": {
+        "title": "Adicionales"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "descripcion": "Descripcion",
+      "precio": "Precio",
+      "precioGratis": "Precio Gratis",
+      "dispositivos": "Dispositivos"
+    }
+  }
+}

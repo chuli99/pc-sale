@@ -2,10 +2,10 @@ application {
   config {
     applicationType monolith
     authenticationType jwt
-    baseName servidorApi
+    baseName tienda
     buildTool maven
     cacheProvider ehcache
-    clientFramework react
+    clientFramework angular
     clientTheme none
     databaseType sql
     devDatabaseType h2Disk
@@ -17,56 +17,78 @@ application {
   entities *
 }
 
-entity Dispositivo {
+entity Dispositivos {
   codigo String required,
   nombre String required,
   descripcion String required,
   precioBase BigDecimal required min(0),
-  moneda Moneda required
+  moneda String required
 }
 
-entity Caracteristica {
+entity Caracteristicas {
   nombre String required,
   descripcion String required
 }
 
-entity Personalizacion {
+entity Personalizaciones {
   nombre String required,
   descripcion String required
 }
 
-entity Opcion {
+entity Opciones {
   codigo String required,
   nombre String required,
   descripcion String required,
   precioAdicional BigDecimal required min(0)
 }
 
-entity Adicional {
+entity Adicionales {
   nombre String required,
   descripcion String required,
   precio BigDecimal required min(0),
-  precioGratis BigDecimal required min(-1)
+  precioGratis BigDecimal required
+}
+
+entity Ventas {
+  precioFinal BigDecimal required min(0),
+  fechaVenta Instant required,
 }
 
 
-enum Moneda{
-	ARS,
-  USD,
-  EUR
+// Relaciones
+
+relationship OneToMany {
+  Dispositivos{caracteristicas} to Caracteristicas,
+  Dispositivos{adicionales} to Adicionales,
+  Dispositivos{personalizaciones} to Personalizaciones
 }
 
+relationship OneToMany {
+  Personalizaciones{opciones} to Opciones
+}
 
 relationship ManyToOne {
-  Caracteristica{dispositivo required} to Dispositivo,
-  Opcion{personalizacion required} to Personalizacion,
-  Personalizacion{dispositivo required} to Dispositivo,
-  Adicional{dispositivo required} to Dispositivo
+  Ventas{idDispositivo} to Dispositivos
 }
 
 
-paginate Dispositivo, Caracteristica, Personalizacion, Opcion,Adicional with infinite-scroll
-service Dispositivo, Caracteristica, Personalizacion, Opcion, Adicional with serviceClass
-dto Dispositivo, Caracteristica, Personalizacion, Opcion, Adicional with mapstruct
+paginate Dispositivos with infinite-scroll
+paginate Caracteristicas with infinite-scroll
+paginate Personalizaciones with infinite-scroll
+paginate Opciones with infinite-scroll
+paginate Adicionales with infinite-scroll
+paginate Ventas with infinite-scroll
 
+service Dispositivos with serviceClass
+service Caracteristicas with serviceClass
+service Personalizaciones with serviceClass
+service Opciones with serviceClass
+service Adicionales with serviceClass
+service Ventas with serviceClass
 
+dto Dispositivos with mapstruct
+dto Caracteristicas with mapstruct
+dto Personalizaciones with mapstruct
+dto Opciones with mapstruct
+dto Adicionales with mapstruct
+dto Ventas with mapstruct

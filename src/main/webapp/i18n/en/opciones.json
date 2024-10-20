@@ -1,0 +1,28 @@
+{
+  "tiendaApp": {
+    "opciones": {
+      "home": {
+        "title": "Opciones",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Opciones",
+        "createOrEditLabel": "Create or edit a Opciones",
+        "notFound": "No Opciones found"
+      },
+      "created": "A new Opciones is created with identifier {{ param }}",
+      "updated": "A Opciones is updated with identifier {{ param }}",
+      "deleted": "A Opciones is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Opciones {{ id }}?"
+      },
+      "detail": {
+        "title": "Opciones"
+      },
+      "id": "ID",
+      "codigo": "Codigo",
+      "nombre": "Nombre",
+      "descripcion": "Descripcion",
+      "precioAdicional": "Precio Adicional",
+      "personalizaciones": "Personalizaciones"
+    }
+  }
+}

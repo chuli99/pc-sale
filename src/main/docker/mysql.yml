@@ -1,14 +1,14 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 version: '3.8'
 services:
-  servidorapi-mysql:
+  tienda-mysql:
     image: mysql:8.0.30
     volumes:
       - ./config/mysql:/etc/mysql/conf.d
-    #   - ~/volumes/jhipster/servidorApi/mysql/:/var/lib/mysql/
+    #   - ~/volumes/jhipster/tienda/mysql/:/var/lib/mysql/
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=servidorapi
+      - MYSQL_DATABASE=tienda
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:

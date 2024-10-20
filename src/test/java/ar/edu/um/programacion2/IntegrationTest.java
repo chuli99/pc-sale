@@ -1,6 +1,6 @@
 package ar.edu.um.programacion2;
 
-import ar.edu.um.programacion2.ServidorApiApp;
+import ar.edu.um.programacion2.TiendaApp;
 import ar.edu.um.programacion2.config.AsyncSyncConfiguration;
 import ar.edu.um.programacion2.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;
@@ -15,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { ServidorApiApp.class, AsyncSyncConfiguration.class })
+@SpringBootTest(classes = { TiendaApp.class, AsyncSyncConfiguration.class })
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public @interface IntegrationTest {
