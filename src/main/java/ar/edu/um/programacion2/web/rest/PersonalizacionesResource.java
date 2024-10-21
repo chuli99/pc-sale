@@ -62,8 +62,8 @@ public class PersonalizacionesResource {
     public ResponseEntity<PersonalizacionesDTO> createPersonalizaciones(@Valid @RequestBody PersonalizacionesDTO personalizacionesDTO)
         throws URISyntaxException {
         log.debug("REST request to save Personalizaciones : {}", personalizacionesDTO);
-        if (personalizacionesDTO.getId() != null) {
-            throw new BadRequestAlertException("A new personalizaciones cannot already have an ID", ENTITY_NAME, "idexists");
+        if (personalizacionesDTO.getId() == null) {
+            throw new BadRequestAlertException("The personalizacioens must have an ID", ENTITY_NAME, "idnull");
         }
         PersonalizacionesDTO result = personalizacionesService.save(personalizacionesDTO);
         return ResponseEntity

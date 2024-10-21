@@ -58,8 +58,8 @@ public class AdicionalesResource {
     @PostMapping("/adicionales")
     public ResponseEntity<AdicionalesDTO> createAdicionales(@Valid @RequestBody AdicionalesDTO adicionalesDTO) throws URISyntaxException {
         log.debug("REST request to save Adicionales : {}", adicionalesDTO);
-        if (adicionalesDTO.getId() != null) {
-            throw new BadRequestAlertException("A new adicionales cannot already have an ID", ENTITY_NAME, "idexists");
+        if (adicionalesDTO.getId() == null) {
+            throw new BadRequestAlertException("The adicionales must have an ID", ENTITY_NAME, "idnull");
         }
         AdicionalesDTO result = adicionalesService.save(adicionalesDTO);
         return ResponseEntity

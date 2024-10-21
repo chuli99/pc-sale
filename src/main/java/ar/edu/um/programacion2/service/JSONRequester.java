@@ -7,9 +7,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import org.json.JSONException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 public class JSONRequester {
 
     public JSONRequester() {}

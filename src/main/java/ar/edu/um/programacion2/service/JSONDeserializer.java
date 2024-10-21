@@ -55,17 +55,20 @@ public class JSONDeserializer {
 
         for (int i = 0; i < originalArray.size(); i++) {
             ObjectNode device = (ObjectNode) originalArray.get(i);
-            ArrayNode personalizaciones = (ArrayNode) device.get("personalizaciones");
+            ArrayNode caracteristicas = (ArrayNode) device.get("caracteristicas");
 
-            for (int j = 0; j < personalizaciones.size(); j++) {
-                ObjectNode personalizacion = (ObjectNode) personalizaciones.get(j);
-                int personalizacionId = personalizacion.get("id").asInt();
+            for (int j = 0; j < caracteristicas.size(); j++) {
+                ObjectNode caracteristica = (ObjectNode) caracteristicas.get(j);
+                int caracteristicaId = caracteristica.get("id").asInt();
 
-                if (!processedIds.contains(personalizacionId)) {
-                    processedIds.add(personalizacionId);
-                    personalizacion.put("dispositivo", device.get("id").asInt());
-                    personalizacion.remove("opciones");
-                    resultArray.add(personalizacion);
+                if (!processedIds.contains(caracteristicaId)) {
+                    processedIds.add(caracteristicaId);
+                    // Dispositivo anidado
+                    ObjectNode dispositivo = mapper.createObjectNode();
+                    dispositivo.put("id", device.get("id").asInt());
+                    dispositivo.put("nombre", device.get("nombre").asText());
+                    caracteristica.set("dispositivos", dispositivo);
+                    resultArray.add(caracteristica);
                 }
             }
         }
@@ -96,7 +99,11 @@ public class JSONDeserializer {
 
                     if (!processedIds.contains(opcionId)) {
                         processedIds.add(opcionId);
-                        opcion.put("personalizacion", personalizacion.get("id").asInt());
+                        // Anidar personalización en opción
+                        ObjectNode personalizacionNode = mapper.createObjectNode();
+                        personalizacionNode.put("id", personalizacion.get("id").asInt());
+                        personalizacionNode.put("nombre", personalizacion.get("nombre").asText());
+                        opcion.set("personalizaciones", personalizacionNode);
                         resultArray.add(opcion);
                     }
                 }
@@ -125,12 +132,81 @@ public class JSONDeserializer {
 
                 if (!processedIds.contains(adicionalId)) {
                     processedIds.add(adicionalId);
-                    adicional.put("dispositivo", device.get("id").asInt());
+                    // Anidar dispositivo en adicional
+                    ObjectNode dispositivo = mapper.createObjectNode();
+                    dispositivo.put("id", device.get("id").asInt());
+                    dispositivo.put("nombre", device.get("nombre").asText());
+                    adicional.set("dispositivos", dispositivo);
                     resultArray.add(adicional);
                 }
             }
         }
 
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultArray);
+    }
+
+    public static String personalizacionesFromJson() throws IOException {
+        String jsonResponse = jsonRequester.getJSONFromEndpoint(
+            "http://192.168.194.254:8080",
+            "/api/dispositivos",
+            "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqdWxpYW5jYXN0aWxsbyIsImV4cCI6MTczNjUyMzE5MiwiYXV0aCI6IlJPTEVfVVNFUiIsImlhdCI6MTcyNzg4MzE5Mn0.FbIpN_C-wofDOe7mYMpFGySrNFgmqo4mMFFB8nrcmfBsuzKxT4mzLsmyQkjQmSWF4bN4n0HOuOpYAeBv7QMHaw"
+        );
+        ArrayNode originalArray = (ArrayNode) mapper.readTree(jsonResponse);
+        ArrayNode resultArray = mapper.createArrayNode();
+        Set<Integer> processedIds = new HashSet<>();
+
+        for (int i = 0; i < originalArray.size(); i++) {
+            ObjectNode device = (ObjectNode) originalArray.get(i);
+            ArrayNode personalizaciones = (ArrayNode) device.get("personalizaciones");
+
+            for (int j = 0; j < personalizaciones.size(); j++) {
+                ObjectNode personalizacion = (ObjectNode) personalizaciones.get(j);
+                int personalizacionId = personalizacion.get("id").asInt();
+
+                if (!processedIds.contains(personalizacionId)) {
+                    processedIds.add(personalizacionId);
+                    // Anidar dispositivo en personalización
+                    ObjectNode dispositivo = mapper.createObjectNode();
+                    dispositivo.put("id", device.get("id").asInt());
+                    dispositivo.put("nombre", device.get("nombre").asText());
+                    personalizacion.set("dispositivos", dispositivo);
+                    personalizacion.remove("opciones");
+                    resultArray.add(personalizacion);
+                }
+            }
+        }
+
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultArray);
+    }
+
+    public static void main(String[] args) {
+        try {
+            // Prueba de dispositivosFromJson()
+            System.out.println("Probando dispositivosFromJson:");
+            String dispositivosJson = JSONDeserializer.dispositivosFromJson();
+            System.out.println(dispositivosJson);
+
+            // Prueba de caracteristicasFromJson()
+            System.out.println("Probando caracteristicasFromJson:");
+            String caracteristicasJson = JSONDeserializer.caracteristicasFromJson();
+            System.out.println(caracteristicasJson);
+
+            // Prueba de opcionesFromJson()
+            System.out.println("Probando opcionesFromJson:");
+            String opcionesJson = JSONDeserializer.opcionesFromJson();
+            System.out.println(opcionesJson);
+
+            // Prueba de adicionalesFromJson()
+            System.out.println("Probando adicionalesFromJson:");
+            String adicionalesJson = JSONDeserializer.adicionalesFromJson();
+            System.out.println(adicionalesJson);
+
+            // Prueba de personalizacionesFromJson()
+            System.out.println("Probando personalizacionesFromJson:");
+            String personalizacionesJson = JSONDeserializer.personalizacionesFromJson();
+            System.out.println(personalizacionesJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

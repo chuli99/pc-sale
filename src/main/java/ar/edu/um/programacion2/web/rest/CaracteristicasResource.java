@@ -59,8 +59,8 @@ public class CaracteristicasResource {
     public ResponseEntity<CaracteristicasDTO> createCaracteristicas(@Valid @RequestBody CaracteristicasDTO caracteristicasDTO)
         throws URISyntaxException {
         log.debug("REST request to save Caracteristicas : {}", caracteristicasDTO);
-        if (caracteristicasDTO.getId() != null) {
-            throw new BadRequestAlertException("A new caracteristicas cannot already have an ID", ENTITY_NAME, "idexists");
+        if (caracteristicasDTO.getId() == null) {
+            throw new BadRequestAlertException("The caracteristicas must have an ID", ENTITY_NAME, "idnull");
         }
         CaracteristicasDTO result = caracteristicasService.save(caracteristicasDTO);
         return ResponseEntity

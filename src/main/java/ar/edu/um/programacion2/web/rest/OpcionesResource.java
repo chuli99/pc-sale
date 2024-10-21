@@ -58,8 +58,8 @@ public class OpcionesResource {
     @PostMapping("/opciones")
     public ResponseEntity<OpcionesDTO> createOpciones(@Valid @RequestBody OpcionesDTO opcionesDTO) throws URISyntaxException {
         log.debug("REST request to save Opciones : {}", opcionesDTO);
-        if (opcionesDTO.getId() != null) {
-            throw new BadRequestAlertException("A new opciones cannot already have an ID", ENTITY_NAME, "idexists");
+        if (opcionesDTO.getId() == null) {
+            throw new BadRequestAlertException("The opciones must have an ID", ENTITY_NAME, "idnull");
         }
         OpcionesDTO result = opcionesService.save(opcionesDTO);
         return ResponseEntity
