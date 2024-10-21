@@ -59,8 +59,8 @@ public class DispositivosResource {
     public ResponseEntity<DispositivosDTO> createDispositivos(@Valid @RequestBody DispositivosDTO dispositivosDTO)
         throws URISyntaxException {
         log.debug("REST request to save Dispositivos : {}", dispositivosDTO);
-        if (dispositivosDTO.getId() != null) {
-            throw new BadRequestAlertException("A new dispositivos cannot already have an ID", ENTITY_NAME, "idexists");
+        if (dispositivosDTO.getId() == null) {
+            throw new BadRequestAlertException("The dispositivos must have an ID", ENTITY_NAME, "idnull");
         }
         DispositivosDTO result = dispositivosService.save(dispositivosDTO);
         return ResponseEntity
