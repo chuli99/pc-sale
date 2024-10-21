@@ -52,9 +52,9 @@ public class PostEntitiesService {
 
             // Verificar el estado de la respuesta
             if (response.getStatusCode().is2xxSuccessful()) {
-                System.out.println("Entidad posteada exitosamente a " + url);
+                System.out.println("Entidad posteada exitosamente: " + url);
             } else {
-                System.out.println("Error al postear la entidad a " + url + ": " + response.getStatusCode());
+                System.out.println("Error al postear la entidad: " + url + ": " + response.getStatusCode());
             }
         } catch (Exception e) {
             e.printStackTrace();
