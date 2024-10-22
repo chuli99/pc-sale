@@ -84,7 +84,6 @@ public class PostEntitiesService {
         log.info("Posteando Caracteristica");
         for (Caracteristicas caracteristica : caracteristicas) {
             if (!caracteristicaRepository.existsById(caracteristica.getId())) {
-                log.info("Entra al condicional");
                 caracteristicaRepository.save(caracteristica);
             }
         }
