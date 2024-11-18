@@ -50,6 +50,7 @@ public class JSONDeserializer {
             "/api/dispositivos",
             "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqdWxpYW5jYXN0aWxsbyIsImV4cCI6MTc0MDYxMTgxMiwiYXV0aCI6IlJPTEVfVVNFUiIsImlhdCI6MTczMTk3MTgxMn0.onB4FbHNpVusRbScWourNN6RH_T6aR3jOnHNpu3qMVXAEYp1LdeHobZH16BKY7EwAxdCXqdw5p6hGaFjgAhtxg"
         );
+
         ArrayNode originalArray = (ArrayNode) mapper.readTree(jsonResponse);
         ArrayNode resultArray = mapper.createArrayNode();
         Set<Integer> processedIds = new HashSet<>();
