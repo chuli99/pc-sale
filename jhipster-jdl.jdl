@@ -2,7 +2,7 @@ application {
   config {
     applicationType monolith
     authenticationType jwt
-    baseName tienda
+    baseName serverApi
     buildTool maven
     cacheProvider ehcache
     clientFramework angular
@@ -11,84 +11,68 @@ application {
     devDatabaseType h2Disk
     enableHibernateCache true
     enableTranslation true
-    packageName ar.edu.um.programacion2
+    packageName um.prog2
     prodDatabaseType mysql
   }
   entities *
 }
-
-entity Dispositivos {
+entity Dispositivo {
+  id Long required,
+  idExterno Long required,
   codigo String required,
   nombre String required,
   descripcion String required,
   precioBase BigDecimal required min(0),
-  moneda String required
+  moneda Moneda required
 }
-
-entity Caracteristicas {
+entity Caracteristica {
+  id Long required,
+  idExterno Long required,
   nombre String required,
   descripcion String required
 }
-
-entity Personalizaciones {
+entity Personalizacion {
+  id Long required,
+  idExterno Long required,
   nombre String required,
   descripcion String required
 }
-
-entity Opciones {
+entity Opcion {
+  id Long required,
+  idExterno Long required,
   codigo String required,
   nombre String required,
   descripcion String required,
   precioAdicional BigDecimal required min(0)
 }
-
-entity Adicionales {
+entity Adicional {
+  id Long required,
+  idExterno Long required,
   nombre String required,
   descripcion String required,
   precio BigDecimal required min(0),
-  precioGratis BigDecimal required
+  precioGratis BigDecimal required min(-1)
 }
-
-entity Ventas {
-  precioFinal BigDecimal required min(0),
-  fechaVenta Instant required,
+entity Venta {
+    fechaVenta ZonedDateTime required,
+    precioFinal Float required
 }
-
-
-// Relaciones
-
-relationship OneToMany {
-  Dispositivos{caracteristicas} to Caracteristicas,
-  Dispositivos{adicionales} to Adicionales,
-  Dispositivos{personalizaciones} to Personalizaciones
+enum Moneda{
+	ARS,
+  USD,
+  EUR
 }
-
-relationship OneToMany {
-  Personalizaciones{opciones} to Opciones
-}
-
 relationship ManyToOne {
-  Ventas{idDispositivo} to Dispositivos
+  Caracteristica{dispositivo required} to Dispositivo,
+  Opcion{personalizacion required} to Personalizacion,
+  Personalizacion{dispositivo required} to Dispositivo,
+  Adicional{dispositivo required} to Dispositivo,
+  Venta{dispositivo required} to Dispositivo
 }
-
-
-paginate Dispositivos with infinite-scroll
-paginate Caracteristicas with infinite-scroll
-paginate Personalizaciones with infinite-scroll
-paginate Opciones with infinite-scroll
-paginate Adicionales with infinite-scroll
-paginate Ventas with infinite-scroll
-
-service Dispositivos with serviceClass
-service Caracteristicas with serviceClass
-service Personalizaciones with serviceClass
-service Opciones with serviceClass
-service Adicionales with serviceClass
-service Ventas with serviceClass
-
-dto Dispositivos with mapstruct
-dto Caracteristicas with mapstruct
-dto Personalizaciones with mapstruct
-dto Opciones with mapstruct
-dto Adicionales with mapstruct
-dto Ventas with mapstruct
+relationship ManyToMany {
+    Venta{personalizaciones} to Personalizacion,
+    Venta{adicionales} to Adicional
+} 
+paginate Dispositivo, Caracteristica, Personalizacion, Opcion,Adicional, Venta with infinite-scroll
+service Dispositivo, Caracteristica, Personalizacion, Opcion, Adicional, Venta with serviceClass
+dto Dispositivo, Caracteristica, Personalizacion, Opcion, Adicional, Venta with mapstruct

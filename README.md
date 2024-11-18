@@ -1,6 +1,6 @@
-# tienda
+# serverApi
 
-This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
+This application was generated using JHipster 8.7.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.7.1](https://www.jhipster.tech/documentation-archive/v8.7.1).
 
 ## Project Structure
 
@@ -13,7 +13,7 @@ In the project root, JHipster generates configuration files for tools like git, 
 - `.yo-rc.json` - Yeoman configuration file
   JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for specific blueprints configuration.
 - `.yo-resolve` (optional) - Yeoman conflict resolver
-  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if ommited) or force. Lines starting with `#` are considered comments and are ignored.
+  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if omitted) or force. Lines starting with `#` are considered comments and are ignored.
 - `.jhipster/*.json` - JHipster entity configuration files
 
 - `npmw` - wrapper to use locally installed npm.
@@ -22,16 +22,13 @@ In the project root, JHipster generates configuration files for tools like git, 
 
 ## Development
 
-Before you can build this project, you must install and configure the following dependencies on your machine:
+The build system will install automatically the recommended version of Node and npm.
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
-   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-
-After installing Node, you should be able to run the following command to install development tools.
+We provide a wrapper to launch npm.
 You will only need to run this command when dependencies change in [package.json](package.json).
 
 ```
-npm install
+./npmw install
 ```
 
 We use npm scripts and [Angular CLI][] with [Webpack][] as our build system.
@@ -41,20 +38,20 @@ auto-refreshes when files change on your hard drive.
 
 ```
 ./mvnw
-npm start
+./npmw start
 ```
 
 Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
+specifying a newer version in [package.json](package.json). You can also run `./npmw update` and `./npmw install` to manage dependencies.
+Add the `help` flag on any command to see how you can use it. For example, `./npmw help update`.
 
-The `npm run` command will list all of the scripts available to run for this project.
+The `./npmw run` command will list all the scripts available to run for this project.
 
 ### PWA Support
 
 JHipster ships with PWA (Progressive Web App) support, and it's turned off by default. One of the main components of a PWA is a service worker.
 
-The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.module.ts`:
+The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.config.ts`:
 
 ```typescript
 ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
@@ -65,17 +62,17 @@ ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
 For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
 
 ```
-npm install --save --save-exact leaflet
+./npmw install --save --save-exact leaflet
 ```
 
 To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
 
 ```
-npm install --save-dev --save-exact @types/leaflet
+./npmw install --save-dev --save-exact @types/leaflet
 ```
 
 Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/app.module.ts](src/main/webapp/app/app.module.ts) file:
+Edit [src/main/webapp/app/app.config.ts](src/main/webapp/app/app.config.ts) file:
 
 ```
 import 'leaflet/dist/leaflet.js';
@@ -84,7 +81,7 @@ import 'leaflet/dist/leaflet.js';
 Edit [src/main/webapp/content/scss/vendor.scss](src/main/webapp/content/scss/vendor.scss) file:
 
 ```
-@import '~leaflet/dist/leaflet.css';
+@import 'leaflet/dist/leaflet.css';
 ```
 
 Note: There are still a few other things remaining to do for Leaflet that we won't detail here.
@@ -106,22 +103,14 @@ will generate few files:
 ```
 create src/main/webapp/app/my-component/my-component.component.html
 create src/main/webapp/app/my-component/my-component.component.ts
-update src/main/webapp/app/app.module.ts
-```
-
-### JHipster Control Center
-
-JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
-
-```
-docker-compose -f src/main/docker/jhipster-control-center.yml up
+update src/main/webapp/app/app.config.ts
 ```
 
 ## Building for production
 
 ### Packaging as jar
 
-To build the final jar and optimize the tienda application for production, run:
+To build the final jar and optimize the serverApi application for production, run:
 
 ```
 ./mvnw -Pprod clean verify
@@ -146,7 +135,17 @@ To package your application as a war in order to deploy it to an application ser
 ./mvnw -Pprod,war clean verify
 ```
 
+### JHipster Control Center
+
+JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
+
+```
+docker compose -f src/main/docker/jhipster-control-center.yml up
+```
+
 ## Testing
+
+### Spring Boot tests
 
 To launch your application's tests, run:
 
@@ -159,51 +158,58 @@ To launch your application's tests, run:
 Unit tests are run by [Jest][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
 
 ```
-npm test
+./npmw test
 ```
 
-For more information, refer to the [Running tests page][].
+## Others
 
-### Code quality
+### Code quality using Sonar
 
 Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
 
 ```
-docker-compose -f src/main/docker/sonar.yml up -d
+docker compose -f src/main/docker/sonar.yml up -d
 ```
 
-Note: we have turned off authentication in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
+Note: we have turned off forced authentication redirect for UI in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
 
 You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
 
 Then, run a Sonar analysis:
 
 ```
-./mvnw -Pprod clean verify sonar:sonar
+./mvnw -Pprod clean verify sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
 ```
 
 If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
 
 ```
-./mvnw initialize sonar:sonar
+./mvnw initialize sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
+```
+
+Additionally, Instead of passing `sonar.password` and `sonar.login` as CLI arguments, these parameters can be configured from [sonar-project.properties](sonar-project.properties) as shown below:
+
+```
+sonar.login=admin
+sonar.password=admin
 ```
 
 For more information, refer to the [Code quality page][].
 
-## Using Docker to simplify development (optional)
+### Using Docker to simplify development (optional)
 
 You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
 
 For example, to start a mysql database in a docker container, run:
 
 ```
-docker-compose -f src/main/docker/mysql.yml up -d
+docker compose -f src/main/docker/mysql.yml up -d
 ```
 
 To stop it and remove the container, run:
 
 ```
-docker-compose -f src/main/docker/mysql.yml down
+docker compose -f src/main/docker/mysql.yml down
 ```
 
 You can also fully dockerize your application and all the services that it depends on.
@@ -222,7 +228,7 @@ npm run java:docker:arm64
 Then run:
 
 ```
-docker-compose -f src/main/docker/app.yml up -d
+docker compose -f src/main/docker/app.yml up -d
 ```
 
 When running Docker Desktop on MacOS Big Sur or later, consider enabling experimental `Use the new Virtualization framework` for better processing performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
@@ -233,19 +239,19 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
-[jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 7.9.3 archive]: https://www.jhipster.tech/documentation-archive/v7.9.3
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v7.9.3/development/
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v7.9.3/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v7.9.3/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v7.9.3/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v7.9.3/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v7.9.3/setting-up-ci/
-[node.js]: https://nodejs.org/
-[npm]: https://www.npmjs.com/
-[webpack]: https://webpack.github.io/
-[browsersync]: https://www.browsersync.io/
-[jest]: https://facebook.github.io/jest/
-[leaflet]: https://leafletjs.com/
-[definitelytyped]: https://definitelytyped.org/
-[angular cli]: https://cli.angular.io/
+[JHipster Homepage and latest documentation]: https://www.jhipster.tech
+[JHipster 8.7.1 archive]: https://www.jhipster.tech/documentation-archive/v8.7.1
+[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v8.7.1/development/
+[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v8.7.1/docker-compose
+[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v8.7.1/production/
+[Running tests page]: https://www.jhipster.tech/documentation-archive/v8.7.1/running-tests/
+[Code quality page]: https://www.jhipster.tech/documentation-archive/v8.7.1/code-quality/
+[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v8.7.1/setting-up-ci/
+[Node.js]: https://nodejs.org/
+[NPM]: https://www.npmjs.com/
+[Webpack]: https://webpack.github.io/
+[BrowserSync]: https://www.browsersync.io/
+[Jest]: https://facebook.github.io/jest/
+[Leaflet]: https://leafletjs.com/
+[DefinitelyTyped]: https://definitelytyped.org/
+[Angular CLI]: https://cli.angular.io/

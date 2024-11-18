@@ -1,32 +1,34 @@
-export const EntityNavbarItems = [
+import NavbarItem from 'app/layouts/navbar/navbar-item.model';
+
+export const EntityNavbarItems: NavbarItem[] = [
   {
-    name: 'Dispositivos',
-    route: 'dispositivos',
-    translationKey: 'global.menu.entities.dispositivos',
+    name: 'Dispositivo',
+    route: '/dispositivo',
+    translationKey: 'global.menu.entities.dispositivo',
   },
   {
-    name: 'Caracteristicas',
-    route: 'caracteristicas',
-    translationKey: 'global.menu.entities.caracteristicas',
+    name: 'Caracteristica',
+    route: '/caracteristica',
+    translationKey: 'global.menu.entities.caracteristica',
   },
   {
-    name: 'Personalizaciones',
-    route: 'personalizaciones',
-    translationKey: 'global.menu.entities.personalizaciones',
+    name: 'Personalizacion',
+    route: '/personalizacion',
+    translationKey: 'global.menu.entities.personalizacion',
   },
   {
-    name: 'Opciones',
-    route: 'opciones',
-    translationKey: 'global.menu.entities.opciones',
+    name: 'Opcion',
+    route: '/opcion',
+    translationKey: 'global.menu.entities.opcion',
   },
   {
-    name: 'Adicionales',
-    route: 'adicionales',
-    translationKey: 'global.menu.entities.adicionales',
+    name: 'Adicional',
+    route: '/adicional',
+    translationKey: 'global.menu.entities.adicional',
   },
   {
-    name: 'Ventas',
-    route: 'ventas',
-    translationKey: 'global.menu.entities.ventas',
+    name: 'Venta',
+    route: '/venta',
+    translationKey: 'global.menu.entities.venta',
   },
 ];

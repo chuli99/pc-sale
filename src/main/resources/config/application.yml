@@ -30,20 +30,18 @@ management:
       base-path: /management
       exposure:
         include:
-          [
-            'configprops',
-            'env',
-            'health',
-            'info',
-            'jhimetrics',
-            'jhiopenapigroups',
-            'logfile',
-            'loggers',
-            'prometheus',
-            'threaddump',
-            'caches',
-            'liquibase',
-          ]
+          - configprops
+          - env
+          - health
+          - info
+          - jhimetrics
+          - jhiopenapigroups
+          - logfile
+          - loggers
+          - prometheus
+          - threaddump
+          - caches
+          - liquibase
   endpoint:
     health:
       show-details: when_authorized
@@ -65,12 +63,15 @@ management:
   health:
     mail:
       enabled: false # When using the MailService, configure an SMTP server and set this to true
-  metrics:
-    export:
-      # Prometheus is the default metrics backend
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
         step: 60
+  observations:
+    key-values:
+      application: ${spring.application.name}
+  metrics:
     enable:
       http: true
       jvm: true
@@ -82,22 +83,26 @@ management:
         all: true
       percentiles:
         all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+    data:
+      repository:
+        autotime:
+          enabled: true
     tags:
       application: ${spring.application.name}
-    web:
-      server:
-        request:
-          autotime:
-            enabled: true
 
 spring:
   application:
-    name: tienda
+    name: serverApi
+  docker:
+    compose:
+      enabled: true
+      lifecycle-management: start-only
+      file: src/main/docker/services.yml
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
     # Otherwise, it will be filled in by maven when building the JAR file
     # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
-    active: #spring.profiles.active#
+    active: '@spring.profiles.active@'
     group:
       dev:
         - dev
@@ -114,6 +119,8 @@ spring:
     open-in-view: false
     properties:
       hibernate.jdbc.time_zone: UTC
+      hibernate.timezone.default_storage: NORMALIZE
+      hibernate.type.preferred_instant_jdbc_type: TIMESTAMP
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true
       hibernate.cache.use_second_level_cache: true
@@ -128,24 +135,30 @@ spring:
     hibernate:
       ddl-auto: none
       naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
   messages:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
   mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+    problemdetails:
+      enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          authority-prefix: ''
+          authorities-claim-name: auth
   task:
     execution:
-      thread-name-prefix: tienda-task-
+      thread-name-prefix: server-api-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: tienda-scheduling-
+      thread-name-prefix: server-api-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -176,7 +189,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'tiendaApp'
+    name: 'serverApiApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
@@ -186,12 +199,12 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: tienda@localhost
+    from: serverApi@localhost
   api-docs:
-    default-include-pattern: ${server.servlet.context-path:}/api/**
-    management-include-pattern: ${server.servlet.context-path:}/management/**
-    title: Tienda API
-    description: Tienda API documentation
+    default-include-pattern: /api/**
+    management-include-pattern: /management/**
+    title: Server Api API
+    description: Server Api API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:
