@@ -1,5 +1,5 @@
 {
-  "serverApiApp": {
+  "servidorApiApp": {
     "adicional": {
       "home": {
         "title": "Adicionals",
@@ -17,7 +17,7 @@
       "detail": {
         "title": "Adicional"
       },
-      "id": "Id",
+      "id": "ID",
       "idExterno": "Id Externo",
       "nombre": "Nombre",
       "descripcion": "Descripcion",

@@ -1,8 +1,8 @@
 {
   "annotations": {
-    "changelogDate": "20241118222222"
+    "changelogDate": "20241126024508"
   },
-  "applications": ["serverApi"],
+  "applications": ["servidorApi"],
   "dto": "mapstruct",
   "fields": [
     {
@@ -12,8 +12,9 @@
     },
     {
       "fieldName": "precioFinal",
-      "fieldType": "Float",
-      "fieldValidateRules": ["required"]
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
     }
   ],
   "name": "Venta",

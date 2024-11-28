@@ -1,5 +1,5 @@
 {
-  "serverApiApp": {
+  "servidorApiApp": {
     "caracteristica": {
       "home": {
         "title": "Caracteristicas",
@@ -17,7 +17,7 @@
       "detail": {
         "title": "Caracteristica"
       },
-      "id": "Id",
+      "id": "ID",
       "idExterno": "Id Externo",
       "nombre": "Nombre",
       "descripcion": "Descripcion",

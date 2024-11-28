@@ -1,15 +1,10 @@
 {
   "annotations": {
-    "changelogDate": "20241118221922"
+    "changelogDate": "20241126024208"
   },
-  "applications": ["serverApi"],
+  "applications": ["servidorApi"],
   "dto": "mapstruct",
   "fields": [
-    {
-      "fieldName": "id",
-      "fieldType": "Long",
-      "fieldValidateRules": ["required"]
-    },
     {
       "fieldName": "idExterno",
       "fieldType": "Long",

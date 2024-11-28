@@ -1,5 +1,5 @@
 {
-  "serverApiApp": {
+  "servidorApiApp": {
     "dispositivo": {
       "home": {
         "title": "Dispositivos",
@@ -17,7 +17,7 @@
       "detail": {
         "title": "Dispositivo"
       },
-      "id": "Id",
+      "id": "ID",
       "idExterno": "Id Externo",
       "codigo": "Codigo",
       "nombre": "Nombre",
