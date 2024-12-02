@@ -160,7 +160,7 @@ public class DispositivoService {
 
     //sincronizacion periodica
 
-    @Scheduled(fixedRate = 120000)
+    @Scheduled(fixedRate = 1200000)
     public void sincronizarDispositivos() {
         LOG.info("Guardando dispositivos de la API externa en la base de datos.");
         traerDispositivos();
