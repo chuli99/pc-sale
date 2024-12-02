@@ -158,8 +158,6 @@ public class DispositivoService {
         dispositivoRepository.deleteById(id);
     }
 
-    //sincronizacion periodica
-
     @Scheduled(fixedRate = 1200000)
     public void sincronizarDispositivos() {
         LOG.info("Guardando dispositivos de la API externa en la base de datos.");

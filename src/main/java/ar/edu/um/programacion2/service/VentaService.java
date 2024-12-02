@@ -170,88 +170,71 @@ public class VentaService {
 
     @Transactional
     public Venta guardarVenta(VentaCatedraDTO request) {
-        // 1. Buscar el dispositivo
         Dispositivo dispositivo = dispositivoRepository
             .findById(request.getIdDispositivo())
             .orElseThrow(() -> new IllegalArgumentException("Dispositivo no encontrado con ID: " + request.getIdDispositivo()));
 
-        // 2. Crear la venta
         Venta venta = new Venta();
         venta.setDispositivo(dispositivo);
 
-        // Usar la fecha proporcionada o la actual
         venta.setFechaVenta(request.getFechaVenta() != null ? request.getFechaVenta() : ZonedDateTime.now());
 
         BigDecimal precioCalculado = dispositivo.getPrecioBase();
 
-        // 3. Procesar personalizaciones
         if (request.getPersonalizaciones() != null) {
             for (VentaCatedraDTO.PersonalizacionRequest personalizacionRequest : request.getPersonalizaciones()) {
-                // Buscar la personalización
                 Personalizacion personalizacion = personalizacionRepository
                     .findById(personalizacionRequest.getId())
                     .orElseThrow(() ->
                         new IllegalArgumentException("Personalización no encontrada con ID: " + personalizacionRequest.getId())
                     );
 
-                // Buscar la opción seleccionada
                 Opcion opcion = opcionRepository
                     .findById(personalizacionRequest.getOpcion().getId())
                     .orElseThrow(() ->
                         new IllegalArgumentException("Opción no encontrada con ID: " + personalizacionRequest.getOpcion().getId())
                     );
 
-                // Sumar el precio adicional de la opción seleccionada
                 precioCalculado = precioCalculado.add(opcion.getPrecioAdicional());
 
-                // Asociar la personalización a la venta
                 venta.addPersonalizaciones(personalizacion);
             }
         }
 
-        // 4. Procesar adicionales
         if (request.getAdicionales() != null) {
             for (VentaCatedraDTO.AdicionalRequest adicionalRequest : request.getAdicionales()) {
-                // Buscar el adicional
                 Adicional adicional = adicionalRepository
                     .findById(adicionalRequest.getId())
                     .orElseThrow(() -> new IllegalArgumentException("Adicional no encontrado con ID: " + adicionalRequest.getId()));
 
-                // Verificar si el adicional está en promoción
                 boolean enPromocion =
                     adicional.getPrecioGratis().compareTo(BigDecimal.ZERO) >= 0 &&
                     precioCalculado.compareTo(adicional.getPrecioGratis()) >= 0;
 
                 if (!enPromocion) {
-                    // Sumar el precio del adicional si no está en promoción
                     precioCalculado = precioCalculado.add(adicional.getPrecio());
                 }
 
-                // Asociar el adicional a la venta
                 venta.addAdicionales(adicional);
             }
         }
 
-        // 5. Establecer el precio final
         venta.setPrecioFinal(precioCalculado);
 
-        // 6. Guardar la venta en la base de datos
+        //Guardo localmente
         Venta ventaGuardada = ventaRepository.save(venta);
 
-        // 7. Registrar la venta en el servicio externo
+        //Registrar la venta en el servicio externo
         postearVentaCatedra(ventaGuardada);
 
-        // 8. Retornar la venta registrada
         return ventaGuardada;
     }
 
     public void postearVentaCatedra(Venta venta) {
         Map<String, Object> requestBody = new HashMap<>();
 
-        // Agregar idExterno del dispositivo
         requestBody.put("idDispositivo", venta.getDispositivo().getIdExterno());
 
-        // Transformar personalizaciones
         List<Map<String, Object>> personalizaciones = venta
             .getPersonalizaciones()
             .stream()
@@ -261,7 +244,6 @@ public class VentaService {
                 personalizacionMap.put("precio", BigDecimal.ZERO);
                 Map<String, Object> opcionMap = new HashMap<>();
 
-                // Buscar las opciones asociadas a la personalización
                 List<Opcion> opciones = opcionRepository.findByPersonalizacionId(personalizacion.getId());
                 if (opciones.isEmpty()) {
                     throw new IllegalArgumentException(
@@ -274,7 +256,6 @@ public class VentaService {
                     );
                 }
 
-                // Tomar la primera opción (o aplicar una lógica de selección específica)
                 Opcion opcionSeleccionada = opciones.get(0);
                 opcionMap.put("id", opcionSeleccionada.getIdExterno());
                 personalizacionMap.put("opcion", opcionMap);
@@ -283,7 +264,6 @@ public class VentaService {
             .toList();
         requestBody.put("personalizaciones", personalizaciones);
 
-        // Transformar adicionales
         List<Map<String, Object>> adicionales = venta
             .getAdicionales()
             .stream()
@@ -296,13 +276,12 @@ public class VentaService {
             .toList();
         requestBody.put("adicionales", adicionales);
 
-        // Agregar precio final y fecha de venta
         DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME; //tuve q formatearla pq sino no andaba
         requestBody.put("precioFinal", venta.getPrecioFinal());
         requestBody.put("fechaVenta", venta.getFechaVenta().format(formatter));
         LOG.info("Cuerpo de la solicitud enviada al servicio externo: {}", requestBody);
 
-        // Enviar la solicitud al servicio externo
+        //Enviando al servicio externo
         webClient
             .post()
             .uri("/vender")
